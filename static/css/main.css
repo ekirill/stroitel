@@ -1,0 +1,16 @@
+body {
+    background-color: #fff;
+}
+#topBar {
+    background: #298bab;
+    color: #fff;
+    height: 140px;
+}
+
+#topName {
+    font-weight: bolder;
+    font-size: 2.3em;
+}
+#topSubName {
+    font-size: 1em;
+}

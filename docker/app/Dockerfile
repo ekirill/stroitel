@@ -7,8 +7,6 @@ ENV PYTHONPATH=/app
 ENV DJANGO_SETTINGS_MODULE=stroitel.settings
 ENTRYPOINT ["/entrypoint.sh"]
 
-ADD requirements.txt /requirements.txt
-
 RUN set -ex \
     && BUILD_DEPS=" \
     build-essential \
@@ -18,9 +16,11 @@ RUN set -ex \
     netcat \
     " \
     && apt-get update && apt-get install -y --no-install-recommends $BUILD_DEPS \
-    && pip install --no-cache-dir -r /requirements.txt \
-    \
-    && chmod +x /entrypoint.sh \
+    && true
+
+ADD requirements.txt /requirements.txt
+RUN pip install --no-cache-dir -r /requirements.txt
+RUN chmod +x /entrypoint.sh \
     && mkdir /app/ \
     && true
 

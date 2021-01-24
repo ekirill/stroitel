@@ -1,8 +1,16 @@
 from django.shortcuts import render
 
 
-def index(request):
-    return render(request, 'index.html', {'page': 'index'})
+def news(request):
+    return render(request, 'news.html', {'page': 'news'})
+
+
+def guide(request):
+    return render(request, 'guide.html', {'page': 'guide'})
+
+
+def initiatives(request):
+    return render(request, 'initiatives.html', {'page': 'initiatives'})
 
 
 def documents(request):

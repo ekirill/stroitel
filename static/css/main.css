@@ -2,7 +2,7 @@ body {
     background-color: #fff;
 }
 #topBar {
-    background: #298bab;
+    background: url("/static/img/logo.jpg") #298bab no-repeat center;
     color: #fff;
     height: 140px;
 }
@@ -13,4 +13,18 @@ body {
 }
 #topSubName {
     font-size: 1em;
+}
+#mainNavbar .nav-item {
+    font-size: 1.1em;
+}
+#mainNavbar.navbar-light .navbar-nav .nav-link {
+    color: rgba(0,0,0,.8);
+    font-weight: bold;
+}
+#mainNavbar.navbar-light .navbar-nav .nav-link:hover {
+    color: rgba(27,141,58,.9);
+}
+#mainNavbar.navbar-light .navbar-nav .active>.nav-link {
+    color: rgba(27,141,58,.9);
+    text-decoration: underline;
 }

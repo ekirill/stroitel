@@ -21,15 +21,17 @@
 </head>
 
 <body>
-  <div id="topBar">
-    <div class="container">
-      <div class="row" >
-        <div class="col-10 mt-3">
-          <span id="topName">СНТ Строитель</span><br>
-          <span id="topSubName" class="d-sm-none d-md-block">Москва, поселение Воскресенское</span>
+  <div id="topBar" class="align-middle">
+    <div class="container h-100">
+      <div class="row h-100">
+        <div class="col-md-9 col-xl-10 col-xxl-10 col-sm-7 my-auto">
+            <span id="topName">СНТ Строитель</span><br>
+            <span id="topSubName">Москва, пос. Воскресенское</span>
         </div>
-        <div class="col-2 text-right">
-          <a class="nav-link{% if page == 'contacts' %} active{% endif %}" href="{% url 'contacts' %}">Контакты</a>
+        <div class="col-md-3 col-xl-2 col-xxl-2 col-sm-5 text-right my-auto">
+          <a class="nav-link btn btn-primary{% if page == 'contacts' %} active{% endif %}" href="{% url 'contacts' %}">
+              Контакты
+          </a>
         </div>
       </div>
     </div>
@@ -51,36 +53,20 @@
       <!-- Links -->
       <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
         <ul class="navbar-nav">
-          <li class="nav-item{% if page == 'index' %} active{% endif %}">
-            <a class="nav-link" href="{% url 'index' %}">Новости</a>
+          <li class="nav-item mr-5{% if page == 'news' %} active{% endif %}">
+            <a class="nav-link text-uppercase" href="{% url 'index' %}">
+              Новости
+            </a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownInfrastructure" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Инфраструктура</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownInfrastructure">
-              <a class="dropdown-item" href="#">Территория СНТ</a>
-              <a class="dropdown-item" href="#">Электросети</a>
-              <a class="dropdown-item" href="#">Водоснабжение</a>
-              <a class="dropdown-item" href="#">Интернет</a>
-              <a class="dropdown-item" href="#">Газификация</a>
-            </div>
+          <li class="nav-item mr-5{% if page == 'guide' %} active{% endif %}">
+            <a class="nav-link text-uppercase" href="{% url 'guide' %}">
+              Гид по СНТ
+            </a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDocuments" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Документы</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownDocuments">
-              <a class="dropdown-item" href="#">Устав СНТ</a>
-              <a class="dropdown-item" href="#">Решения правления</a>
-              <a class="dropdown-item" href="#">Решения собрания</a>
-              <a class="dropdown-item" href="#">Сметы</a>
-              <a class="dropdown-item" href="#">Правовая информация</a>
-              <a class="dropdown-item" href="#">Законодательство</a>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUseful" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Полезное</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownUseful">
-              <a class="dropdown-item" href="#">Гид для новичков</a>
-              <a class="dropdown-item" href="#">Пожарная безопасность</a>
-            </div>
+          <li class="nav-item{% if page == 'initiatives' %} active{% endif %}">
+            <a class="nav-link text-uppercase" href="{% url 'initiatives' %}">
+              Инициативы
+            </a>
           </li>
         </ul>
       </div>

@@ -16,13 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from core.views import index, documents, contacts
+from core.views import news, documents, contacts, guide, initiatives
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('', index, name='index'),
+    path('', news, name='index'),
     path('docs/', documents, name='documents'),
+    path('guide/', guide, name='guide'),
+    path('initiatives/', initiatives, name='initiatives'),
     path('contacts/', contacts, name='contacts'),
 ]

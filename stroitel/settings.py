@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'stroitel',
         'USER': os.getenv('STROITEL_DB_USER', ''),
         'PASSWORD': os.getenv('STROITEL_DB_PASSWORD', ''),
-        'HOST': '127.0.0.1',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
@@ -123,3 +123,4 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+STATIC_ROOT = BASE_DIR / "htdocs"

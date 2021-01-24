@@ -1,0 +1,28 @@
+version: '2.1'
+
+services:
+  db:
+    image: postgres:13.1
+    volumes:
+      - stroitel_db_data:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_USER: ${STROITEL_DB_USER}
+      POSTGRES_PASSWORD: ${STROITEL_DB_PASSWORD}
+      POSTGRES_DB: stroitel
+
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    image: stroitel_app
+    restart: always
+    depends_on:
+      - db
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+
+volumes:
+  stroitel_db_data:

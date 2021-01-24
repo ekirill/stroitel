@@ -5,4 +5,4 @@ migrate: build
 	docker-compose run --rm app python /app/manage.py migrate
 
 up: migrate
-	docker-compose up
+	docker-compose up -d

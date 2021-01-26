@@ -1,10 +1,6 @@
 from django.shortcuts import render
 
 
-def news(request):
-    return render(request, 'news.html', {'page': 'news'})
-
-
 def guide(request):
     return render(request, 'guide.html', {'page': 'guide'})
 

@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <h6 class="text-left mb-4">{{ object.published_at | date:"D d F Y" }}</h6>
+  <h2 class="font-weight-bolder mb-4">{{ object.title }}</h2>
+  <p>{{ object.full_text | safe }}</p>
+{% endblock content %}

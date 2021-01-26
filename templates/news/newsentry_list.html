@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  {% for entry in object_list %}
+    <div class="mb-5">
+      <h6 class="text-left mb-4">{{ entry.published_at | date:"D d F Y" }}</h6>
+      <h3 class="font-weight-bolder mb-4">{{ entry.title }}</h3>
+      <p>{{ entry.short_text | safe }}</p>
+      {% if entry.long_text %}<p><a href="{% url 'news_detail' pk=entry.pk %}">Подробнее...</a></p>{% endif %}
+    </div>
+    {% if not forloop.last %}
+      <hr class="mb-5">
+    {% endif %}
+  {% endfor %}
+
+  {% if page_obj.paginator.num_pages > 1 %}
+    <nav aria-label="Страницы">
+      <ul class="pagination pagination-lg">
+        {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page=1">первая</a></li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+          </li>
+        {% endif %}
+        <li class="page-item active" aria-current="page">
+          <span class="page-link">{{ page_obj.number }}</span>
+        </li>
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">последняя</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+{% endblock content %}

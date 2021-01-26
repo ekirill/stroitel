@@ -2,7 +2,7 @@ body {
     background-color: #fff;
 }
 #topBar {
-    background: url("/static/img/logo.jpg") #298bab no-repeat center;
+    background: url("/static/img/logo.jpg") #0e1e09 no-repeat center;
     color: #fff;
     height: 140px;
 }

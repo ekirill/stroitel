@@ -12,7 +12,7 @@ class NewsEntryView(DetailView):
     queryset = NewsEntry.objects.prefetch_related(
         Prefetch(
             'section_binds',
-            queryset=NewsEntry.site_sections.through.objects.select_related('site_section').order_by('order'),
+            queryset=NewsEntry.site_sections.through.objects.select_related('site_section').order_by('order', 'pk'),
         ),
     )
 
@@ -31,6 +31,12 @@ class NewsEntryView(DetailView):
     @property
     def extra_context(self):
         if self.site_section:
+            if self.site_section.parent:
+                return {
+                    'page': self.site_section.parent.slug,
+                    'sub_page': self.site_section.slug,
+                }
+
             return {'page': self.site_section.slug}
 
 

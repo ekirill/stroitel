@@ -13,7 +13,10 @@ class SiteSection(models.Model):
     )
 
     def __str__(self):
-        return f"{self.title} [{self.slug}]"
+        if self.parent:
+            return f"{self.parent.title} / {self.title}"
+        else:
+            return f"{self.title}"
 
     class Meta:
         verbose_name = 'Раздел сайта'
@@ -44,8 +47,8 @@ class NewsEntry(models.Model):
         return f"[{self.published_at:%Y-%m-%d}] {self.title}"
 
     class Meta:
-        verbose_name = 'Новость'
-        verbose_name_plural = 'Новости'
+        verbose_name = 'Документ'
+        verbose_name_plural = 'Документы'
 
 
 class NewsEntryBind(models.Model):

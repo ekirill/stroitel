@@ -13,6 +13,7 @@ RUN set -ex \
     iproute2 \
     libpcre3-dev \
     libpq-dev \
+    mime-support \
     netcat \
     " \
     && apt-get update && apt-get install -y --no-install-recommends $BUILD_DEPS \

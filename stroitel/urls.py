@@ -16,17 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from core.views import documents, contacts, guide, initiatives
-from news.views import NewsListView
+from core.views import documents, contacts, initiatives
+from news.views import NewsListView, GuideListView, InitiativesListView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', NewsListView.as_view(), name='news_list'),
-    path('news/', include('news.urls')),
-    path('docs/', documents, name='documents'),
-    path('guide/', guide, name='guide'),
-    path('initiatives/', initiatives, name='initiatives'),
+    path('guide/', GuideListView.as_view(), name='guide_list'),
+    path('initiatives/', InitiativesListView.as_view(), name='initiatives_list'),
+
+    path('site/', include('news.urls')),
+
     path('contacts/', contacts, name='contacts'),
 ]

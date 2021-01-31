@@ -1,3 +1,16 @@
 from django.contrib import admin
 
-# Register your models here.
+from core.models import StroiPhone, StroiUser
+
+
+class StroiUserAdmin(admin.ModelAdmin):
+    pass
+
+
+class StroiPhoneAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(StroiUser, StroiUserAdmin)
+admin.site.register(StroiPhone, StroiPhoneAdmin)
+

@@ -54,6 +54,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'stroitel.urls'
+AUTH_USER_MODEL = 'core.StroiUser'
 
 TEMPLATES = [
     {

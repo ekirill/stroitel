@@ -1,10 +1,6 @@
 from django.shortcuts import render
 
 
-def guide(request):
-    return render(request, 'guide.html', {'page': 'guide'})
-
-
 def initiatives(request):
     return render(request, 'initiatives.html', {'page': 'initiatives'})
 

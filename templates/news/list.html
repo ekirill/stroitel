@@ -2,31 +2,9 @@
 {% load static %}
 
 {% block content %}
-  <div class="mb-5">
-    <h6 class="text-left mb-4">23 января 2021</h6>
-    <h3 class="font-weight-bolder mb-4">Общее собрание по вопросу электроснабжения</h3>
-    <p>We selected best in our opinion blogs and media formats about architecture and urban innovation.An internal blog, generally accessed through the corporation's Intranet, is a weblog that any employee can view. Many blogs are also communal, allowing anyone to post to them.</p>
-    <p>Internal blogs may be used in lieu of meetings and e-mail discussions, and can be especially useful when the people involved are in different locations, or have conflicting schedules. Blogs may also allow individuals who otherwise would not have been aware of or invited to participate in a discussion to contribute their expertise.</p>
-    <p><a href="#">Подробнее...</a></p>
-  </div>
-
-  <hr class="mb-5">
-
-  <div class="mb-5">
-    <h6 class="text-left mb-4">21 января 2021</h6>
-    <h3 class="font-weight-bolder mb-4">Заседание правления</h3>
-    <p>Internal blogs may be used in lieu of meetings and e-mail discussions, and can be especially useful when the people involved are in different locations, or have conflicting schedules. Blogs may also allow individuals who otherwise would not have been aware of or invited to participate in a discussion to contribute their expertise.</p>
-    <p>We selected best in our opinion blogs and media formats about architecture and urban innovation.An internal blog, generally accessed through the corporation's Intranet, is a weblog that any employee can view. Many blogs are also communal, allowing anyone to post to them.</p>
-    <p><a href="#">Подробнее...</a></p>
-  </div>
-
-  <hr class="mb-5">
-
-  <div class="mb-5">
-    <h6 class="text-left mb-4">20 января 2021</h6>
-    <h3 class="font-weight-bolder mb-4">ЧП на линии электропередач</h3>
-    <p>Internal blogs may be used in lieu of meetings and e-mail discussions, and can be especially useful when the people involved are in different locations, or have conflicting schedules. Blogs may also allow individuals who otherwise would not have been aware of or invited to participate in a discussion to contribute their expertise.</p>
-    <p>We selected best in our opinion blogs and media formats about architecture and urban innovation.An internal blog, generally accessed through the corporation's Intranet, is a weblog that any employee can view. Many blogs are also communal, allowing anyone to post to them.</p>
-    <p><a href="#">Подробнее...</a></p>
-  </div>
+  {% if child_sections %}
+    {% include 'news/subsections_layout.html' %}
+  {% else %}
+    {% include 'news/entries.html' with entries=object_list %}
+  {% endif %}
 {% endblock content %}

@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-md-3">
+    <div class="border-bottom border-1">
+      <a href="{% url 'site_section' slug=section.slug %}">{{ section.title }}</a>
+    </div>
+    {% for section in child_sections %}
+      <div class="border-bottom border-1">
+        <a href="{% url 'site_section' slug=section.slug %}">{{ section.title }}</a>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="col-md-9">
+    {% include 'news/entries.html' with entries=object_list %}
+  </div>
+</div>

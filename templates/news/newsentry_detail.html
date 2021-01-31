@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-  <h6 class="text-left mb-4">{{ object.published_at | date:"D d F Y" }}</h6>
-  <h2 class="font-weight-bolder mb-4">{{ object.title }}</h2>
+  <span class="text-left mb-5 entryDate text-lowercase">{{ object.published_at | date:"d F Y, D" }}</span>
+  <h2 class="font-weight-bolder mt-3 mb-4">{{ object.title }}</h2>
   <p>{{ object.full_text | safe }}</p>
 {% endblock content %}

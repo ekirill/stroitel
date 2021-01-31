@@ -28,3 +28,6 @@ body {
     color: rgba(27,141,58,.9);
     border-bottom: 5px solid rgb(27,141,58);
 }
+.entryDate {
+    color: #969696;
+}

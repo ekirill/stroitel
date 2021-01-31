@@ -1,5 +1,5 @@
 from django.db.models import Prefetch
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.utils.functional import cached_property
 from django.views.generic import ListView, DetailView
 
@@ -56,6 +56,10 @@ class SiteSectionView(ListView):
     def root_section(self):
         return self.site_section and self.site_section.parent or self.site_section
 
+    @cached_property
+    def child_sections(self):
+        return list(SiteSection.objects.filter(parent=self.root_section).order_by('title').all())
+
     @property
     def extra_context(self):
         ctx = {
@@ -65,6 +69,12 @@ class SiteSectionView(ListView):
         }
 
         return ctx
+
+    def get(self, request, *args, **kwargs):
+        if not self.site_section.parent and len(self.child_sections):
+            return redirect('site_section', slug=self.child_sections[0].slug)
+
+        return super().get(request, *args, **kwargs)
 
 
 class NewsListView(SiteSectionView):

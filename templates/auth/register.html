@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="col-4 offset-4">
+
+  {% if success_registration %}
+    <div class="text-center">
+      <h3 class="mt-5 mb-5 green">Вы успешно зарегистрированы!</h3>
+      <a href="{% url 'news_list' %}">Перейти к новостям</a>
+    </div>
+  {% else %}
+    <div class="text-center mb-5"><h4>Регистрация пользователя</h4></div>
+
+    <form method="POST" class="form-group">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="username" class="mb-0"><h5 class="mb-0">Номер участка</h5></label>
+        <small id="usernameHelp" class="form-text mb-2">Пока участок может иметь только один аккаунт.</small>
+        <input
+          type="number"
+          class="form-control"
+          id="username" name="username" aria-describedby="usernameHelp"
+          {% if form.username.value %}value="{{ form.username.value }}"{% endif %}
+          placeholder="Введите только цифры"
+        >
+        {% include "form_field_errors.html" with errors=form.username.errors %}
+      </div>
+
+      <div class="form-group mt-4">
+        <label for="phone" class="mb-0"><h5 class="mb-0">Номер телефона</h5></label>
+        <small id="phoneHelp" class="form-text mb-2">Для проверки, являетесь ли вы членом СНТ.</small>
+        <input
+          type="text"
+          class="form-control"
+          id="phone" name="phone"
+          aria-describedby="phoneHelp"
+          {% if form.phone.value %}value="{{ form.phone.value }}"{% endif %}
+          placeholder="Например: 89991234567"
+          {% if success_registration %}disabled="disabled"{% endif %}
+        >
+        {% include "form_field_errors.html" with errors=form.phone.errors %}
+      </div>
+
+      <div class="form-group mt-4">
+        <label for="password"><h5>Пароль</h5></label>
+        <input
+          type="text"
+          class="form-control"
+          id="password" name="password"
+          placeholder="Не менее 6 символов"
+        >
+        {% include "form_field_errors.html" with errors=form.password.errors %}
+      </div>
+
+      <div class="text-center mt-5"><button type="submit" class="btn btn-success">Сохранить</button></div>
+    </form>
+  {% endif %}
+  </div>
+{% endblock content %}

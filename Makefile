@@ -16,7 +16,7 @@ app-logs:
 deploy: build migrate app-down up
 
 shell:
-	docker-compose -f ./docker-compose.yaml -f ./docker-compose-dev.yaml exec app bash
+	docker-compose -f ./docker-compose.yaml -f ./docker-compose-dev.yaml run app bash
 
 makemigrations: build
 	docker-compose -f ./docker-compose.yaml -f ./docker-compose-dev.yaml run --rm app python /app/manage.py makemigrations

@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.generic import RedirectView
 
-from core.views import documents, contacts, initiatives
+from core.auth.views import register
+from core.views import contacts
 from news.views import NewsListView, GuideListView, InitiativesListView
 
 
@@ -35,4 +36,6 @@ urlpatterns = [
     path('site/', include('news.urls')),
 
     path('contacts/', contacts, name='contacts'),
+
+    path('register/', register, name='register'),
 ]

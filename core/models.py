@@ -3,16 +3,20 @@ from django.contrib.auth.models import AbstractUser
 
 
 class StroiUser(AbstractUser):
-    phone = models.CharField("Телефон", max_length=20, null=True, blank=True)
+    REQUIRED_FIELDS = ['phone']
+    phone = models.CharField("Телефон", max_length=20, null=True, blank=True, unique=True)
 
     class Meta:
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
 
 
-class StroiPhone(models.Model):
-    phone = models.CharField("Телефон", max_length=20, primary_key=True)
+class StroiKnownPhone(models.Model):
+    phone = models.CharField("Телефон", max_length=20, unique=True)
     description = models.CharField("Описание", max_length=300)
+
+    def __str__(self):
+        return f"{self.phone} [{self.description}]"
 
     class Meta:
         verbose_name = "Телефон владельца участка"

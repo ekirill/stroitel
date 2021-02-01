@@ -1,16 +1,22 @@
 from django.contrib import admin
 
-from core.models import StroiPhone, StroiUser
+from core.models import StroiKnownPhone, StroiUser
+from core.services.auth import is_stroi_staff
 
 
 class StroiUserAdmin(admin.ModelAdmin):
     pass
 
 
-class StroiPhoneAdmin(admin.ModelAdmin):
-    pass
+class StroiKnownPhoneAdmin(admin.ModelAdmin):
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        is_stroi_staff.cache_clear()
+
+    def delete_model(self, request, obj):
+        super().delete_model(request, obj)
+        is_stroi_staff.cache_clear()
 
 
 admin.site.register(StroiUser, StroiUserAdmin)
-admin.site.register(StroiPhone, StroiPhoneAdmin)
-
+admin.site.register(StroiKnownPhone, StroiKnownPhoneAdmin)

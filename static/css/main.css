@@ -31,3 +31,6 @@ body {
 .entryDate {
     color: #969696;
 }
+.green {
+    color: rgba(27,141,58,.9);
+}

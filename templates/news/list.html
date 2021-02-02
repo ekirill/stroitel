@@ -2,9 +2,11 @@
 {% load static %}
 
 {% block content %}
+  <div class="mt-5">
   {% if child_sections %}
     {% include 'news/subsections_layout.html' %}
   {% else %}
     {% include 'news/entries.html' with entries=object_list %}
   {% endif %}
+  </div>
 {% endblock content %}

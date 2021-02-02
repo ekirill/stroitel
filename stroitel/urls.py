@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.generic import RedirectView
 
-from core.auth.views import register
+from core.auth.views import register, LoginView, LogoutView
 from core.views import contacts
 from news.views import NewsListView, GuideListView, InitiativesListView
 
@@ -38,4 +38,6 @@ urlpatterns = [
     path('contacts/', contacts, name='contacts'),
 
     path('register/', register, name='register'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
 ]

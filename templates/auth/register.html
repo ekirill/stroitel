@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="col-4 offset-4">
+  <div class="mt-3 col-xs-8 col-sm-8 col-md-6 col-lg-6 col-xl-4 coffset-xs-2 offset-sm-2 offset-md-3 offset-lg-3 offset-xl-4">
+  <div class="card">
+  <div class="card-body">
 
   {% if success_registration %}
     <div class="text-center">
@@ -9,51 +11,54 @@
       <a href="{% url 'news_list' %}">Перейти к новостям</a>
     </div>
   {% else %}
-    <div class="text-center mb-5"><h4>Регистрация пользователя</h4></div>
+    <div class="text-center mb-3"><h4>Регистрация</h4></div>
+    <div class="text-center mb-3">Пока участок может иметь только один аккаунт.</div>
 
     <form method="POST" class="form-group">
       {% csrf_token %}
-      <div class="form-group">
-        <label for="username" class="mb-0"><h5 class="mb-0">Номер участка</h5></label>
-        <small id="usernameHelp" class="form-text mb-2">Пока участок может иметь только один аккаунт.</small>
-        <input
-          type="number"
-          class="form-control"
-          id="username" name="username" aria-describedby="usernameHelp"
-          {% if form.username.value %}value="{{ form.username.value }}"{% endif %}
-          placeholder="Введите только цифры"
-        >
+      <div class="form-group text-center">
         {% include "form_field_errors.html" with errors=form.username.errors %}
+        <input
+          type="text"
+          class="form-control"
+          id="username" name="username"
+          {% if form.username.value %}value="{{ form.username.value }}"{% endif %}
+          placeholder="Введите номер участка"
+        >
+        <small class="form-text mb-2 gray">Вводите только цифры</small>
+
       </div>
 
-      <div class="form-group mt-4">
-        <label for="phone" class="mb-0"><h5 class="mb-0">Номер телефона</h5></label>
-        <small id="phoneHelp" class="form-text mb-2">Для проверки, являетесь ли вы членом СНТ.</small>
+      <div class="form-group text-center mt-4">
+        {% include "form_field_errors.html" with errors=form.phone.errors %}
         <input
           type="text"
           class="form-control"
           id="phone" name="phone"
           aria-describedby="phoneHelp"
           {% if form.phone.value %}value="{{ form.phone.value }}"{% endif %}
-          placeholder="Например: 89991234567"
+          placeholder="Введите номер телефона"
           {% if success_registration %}disabled="disabled"{% endif %}
         >
-        {% include "form_field_errors.html" with errors=form.phone.errors %}
+        <small id="phoneHelp" class="form-text mb-2 gray">Для проверки, являетесь ли вы членом СНТ</small>
       </div>
 
-      <div class="form-group mt-4">
-        <label for="password"><h5>Пароль</h5></label>
+      <div class="form-group text-center mt-4">
+        {% include "form_field_errors.html" with errors=form.password.errors %}
         <input
           type="text"
           class="form-control"
           id="password" name="password"
-          placeholder="Не менее 6 символов"
+          placeholder="Придумайте пароль"
         >
-        {% include "form_field_errors.html" with errors=form.password.errors %}
+        <small id="passwordHelp" class="form-text mb-2 gray">Длина пароля не менее 6 символов</small>
       </div>
 
-      <div class="text-center mt-5"><button type="submit" class="btn btn-success">Сохранить</button></div>
+      <button type="submit" class="mt-4 btn btn-success w-100"><h5>Сохранить</h5></button>
     </form>
   {% endif %}
+
+  </div>
+  </div>
   </div>
 {% endblock content %}

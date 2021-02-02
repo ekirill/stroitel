@@ -1,4 +1,8 @@
-from django.contrib.auth import login
+from django.contrib.auth import login as do_login
+from django.contrib.auth.views import (
+    LoginView as BaseLoginView,
+    LogoutView as BaseLogoutView,
+)
 from django.shortcuts import render
 
 from core.auth.forms import RegisterForm
@@ -14,7 +18,7 @@ def register(request):
             user.save()
 
             success_registration = True
-            login(request, user)
+            do_login(request, user)
     else:
         user_form = RegisterForm()
 
@@ -26,3 +30,11 @@ def register(request):
             'success_registration': success_registration,
         }
     )
+
+
+class LoginView(BaseLoginView):
+    template_name = 'auth/login.html'
+
+
+class LogoutView(BaseLogoutView):
+    template_name = 'auth/logout.html'

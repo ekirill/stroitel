@@ -7,6 +7,15 @@ body {
     height: 140px;
 }
 
+.authButton {
+    color: #fff;
+    border-color: #fff;
+}
+.authButton:hover {
+    color: #fff;
+    border-color: #fff;
+}
+
 #topName {
     font-weight: bolder;
     font-size: 2.3em;
@@ -33,4 +42,10 @@ body {
 }
 .green {
     color: rgba(27,141,58,.9);
+}
+.gray {
+    color: #aaaaaa;
+}
+.red {
+    color: #ff1e1e;
 }

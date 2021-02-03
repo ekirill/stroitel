@@ -1,3 +1,8 @@
+from django.core.management import BaseCommand
+
+from core.models import StroiKnownPhone
+from core.services.auth import normalize_phone
+
 PHONES = (
     ("7 903 134-59-98", ""),
     ("7 903 153-43-11", ""),
@@ -216,3 +221,13 @@ PHONES = (
     ("7 999 818-35-00", ""),
     ("7 999 988-77-77", ""),
 )
+
+
+class Command(BaseCommand):
+    def handle(self, *args, **options):
+        for phone, description in PHONES:
+            phone = normalize_phone(phone)
+            print(f"Adding {phone}")
+            StroiKnownPhone.objects.get_or_create(phone=phone, defaults={
+                'description': description,
+            })

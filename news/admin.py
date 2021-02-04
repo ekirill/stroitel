@@ -39,20 +39,31 @@ class SiteSectionInline(admin.TabularInline):
 class NewsEntryForm(forms.ModelForm):
     short_text = forms.CharField(widget=CKEditorWidget(), label='Короткое описание')
     long_text = forms.CharField(widget=CKEditorWidget(), label='Полный текст (не обязательно)', required=False)
+    not_members_placeholder = forms.CharField(
+        widget=CKEditorWidget(), label='Альтернативный текст не для членов СНТ (не обязательно)', required=False
+    )
 
     class Meta:
         model = NewsEntry
-        fields = ('published_at', 'title', 'short_text', 'long_text')
+        fields = ('published_at', 'title', 'members_only', 'short_text', 'long_text', 'not_members_placeholder')
 
 
 class NewsEntryAdmin(admin.ModelAdmin):
     form = NewsEntryForm
     ordering = ('-published_at',)
-    list_display = ('title', 'published_at', 'get_site_section')
+    list_display = ('title', 'published_at', 'get_site_section', 'get_is_public')
 
     inlines = [
         SiteSectionInline,
     ]
+
+    def get_is_public(self, obj):
+        return not obj.members_only
+
+    get_is_public.short_description = 'Доступно всем'
+    get_is_public.boolean = True
+    get_is_public.admin_order_field = 'members_only'
+
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -81,8 +92,15 @@ class NewsEntryAdmin(admin.ModelAdmin):
 
 
 class MediaFileAdmin(admin.ModelAdmin):
-    list_display = ('title', 'file', 'members_only', 'created_at')
+    list_display = ('title', 'file', 'get_is_public', 'created_at')
     ordering = ('-created_at', )
+
+    def get_is_public(self, obj):
+        return not obj.members_only
+
+    get_is_public.short_description = 'Доступно всем'
+    get_is_public.boolean = True
+    get_is_public.admin_order_field = 'members_only'
 
 
 admin.site.register(NewsEntry, NewsEntryAdmin)

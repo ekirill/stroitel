@@ -31,6 +31,8 @@ class NewsEntry(models.Model):
     title = models.CharField('Заголовок', max_length=1024)
     short_text = models.TextField('Короткое описание')
     long_text = models.TextField('Полный текст', blank=True, null=True)
+    members_only = models.BooleanField(verbose_name='Показывать только членам СНТ', default=False)
+    not_members_placeholder = models.TextField('Текст не для членов СНТ', blank=True, null=True)
     site_sections = models.ManyToManyField(
         SiteSection,
         through='news.NewsEntryBind',

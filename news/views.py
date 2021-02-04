@@ -23,6 +23,13 @@ class NewsEntryView(DetailView):
         ),
     )
 
+    def get(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.members_only and not request.user.is_authenticated:
+            return redirect_to_login(request.build_absolute_uri(), settings.LOGIN_URL, 'next')
+
+        return super().get(request, *args, **kwargs)
+
     def get_object(self, queryset=None):
         if self._object is None:
             self._object = super().get_object(queryset)

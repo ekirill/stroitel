@@ -18,6 +18,9 @@ deploy: build migrate app-down up
 shell:
 	docker-compose -f ./docker-compose.yaml -f ./docker-compose-dev.yaml run app bash
 
+nginx-enter:
+	docker-compose -f ./docker-compose.yaml -f ./docker-compose-dev.yaml exec nginx bash
+
 makemigrations: build
 	docker-compose -f ./docker-compose.yaml -f ./docker-compose-dev.yaml run --rm app python /app/manage.py makemigrations
 
@@ -26,3 +29,6 @@ down:
 
 clean:
 	docker-compose -f ./docker-compose.yaml -f ./docker-compose-dev.yaml down -v
+
+dev-run:
+	docker-compose -f ./docker-compose.yaml -f ./docker-compose-dev.yaml up

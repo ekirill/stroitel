@@ -133,3 +133,6 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 STATIC_ROOT = BASE_DIR / "htdocs"
+
+MEDIA_ROOT = '/mnt/media'
+MEDIA_URL = 'site/media/'

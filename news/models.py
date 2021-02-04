@@ -1,4 +1,7 @@
+import hashlib
+
 from django.db import models
+from django.utils.timezone import now
 
 
 class SiteSection(models.Model):
@@ -24,7 +27,7 @@ class SiteSection(models.Model):
 
 
 class NewsEntry(models.Model):
-    published_at = models.DateTimeField('Дата публикации')
+    published_at = models.DateTimeField('Дата публикации', default=now)
     title = models.CharField('Заголовок', max_length=1024)
     short_text = models.TextField('Короткое описание')
     long_text = models.TextField('Полный текст', blank=True, null=True)
@@ -73,3 +76,23 @@ class NewsEntryBind(models.Model):
     class Meta:
         verbose_name = 'Привязка к разделу'
         verbose_name_plural = 'Привязки к разделам'
+
+
+def get_upload_prefix(instance, filename):
+    filename = filename.lower()
+    prefix = hashlib.md5(filename.encode('UTF-8')).hexdigest()[:5]
+    return f"{prefix}/{filename}"
+
+
+class MediaFile(models.Model):
+    title = models.CharField('Название', max_length=300, blank=True, null=True)
+    file = models.FileField(verbose_name='Документ', unique=True, upload_to=get_upload_prefix)
+    members_only = models.BooleanField(verbose_name='Показывать только членам СНТ', default=False)
+    created_at = models.DateTimeField('Дата загрузки', default=now, db_index=True)
+
+    def __str__(self):
+        return self.title or self.file.name
+
+    class Meta:
+        verbose_name = 'Медиафайл'
+        verbose_name_plural = 'Медиафайлы'

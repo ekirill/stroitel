@@ -1,9 +1,16 @@
+from urllib.parse import urlencode, quote_plus
+
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import redirect_to_login
 from django.db.models import Prefetch
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.functional import cached_property
 from django.views.generic import ListView, DetailView
 
 from news.models import NewsEntry, SiteSection
+from news.services.media import is_members_only
 
 
 class NewsEntryView(DetailView):
@@ -99,3 +106,16 @@ class InitiativesListView(SiteSectionView):
     @cached_property
     def site_section(self):
         return get_object_or_404(SiteSection, slug='initiatives')
+
+
+def media_access(request, prefix, path):
+    full_name = f"{prefix}/{path}"
+    if is_members_only(full_name):
+        if not request.user.is_authenticated:
+            return redirect_to_login(request.build_absolute_uri(), settings.LOGIN_URL, 'next')
+
+    response = HttpResponse()
+    # Content-type will be detected by nginx
+    del response['Content-Type']
+    response['X-Accel-Redirect'] = '/protected_media/' + quote_plus(full_name)
+    return response

@@ -21,8 +21,24 @@ services:
       - db
     env_file:
       - .env
+    expose:
+      - "8000"
+    volumes:
+      - ${STROITEL_MEDIA_STORAGE}:/mnt/media
+
+  nginx:
+    build:
+      context: ./docker/nginx
+    image: stroitel_nginx
+    restart: always
+    depends_on:
+      - app
+    env_file:
+      - .env
     ports:
-      - "8000:8000"
+      - "8000:80"
+    volumes:
+      - ${STROITEL_MEDIA_STORAGE}:/mnt/media:ro
 
 volumes:
   stroitel_db_data:

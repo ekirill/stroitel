@@ -13,16 +13,24 @@ RUN set -ex \
     iproute2 \
     libpcre3-dev \
     libpq-dev \
+    locales \
     mime-support \
     netcat \
     " \
     && apt-get update && apt-get install -y --no-install-recommends $BUILD_DEPS \
+    && sed -i '/ru_RU.UTF-8/s/^# //g' /etc/locale.gen \
+    && locale-gen \
     && true
+ENV LANG ru_RU.UTF-8
+ENV LANGUAGE ru_RU:ru
+ENV LC_ALL ru_RU.UTF-8
+ENV TZ 'Europe/Moscow'
 
 ADD requirements.txt /requirements.txt
 RUN pip install --no-cache-dir -r /requirements.txt
 RUN chmod +x /entrypoint.sh \
-    && mkdir /app/ \
+    && mkdir -p /app/ \
+    && mkdir -p /mnt/media \
     && true
 
 ENV UWSGI_WSGI_FILE=/app/stroitel/wsgi.py

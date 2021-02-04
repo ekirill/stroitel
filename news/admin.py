@@ -3,7 +3,7 @@ from django.contrib import admin
 from django import forms
 from django.db.models import Q, Prefetch
 
-from news.models import NewsEntry, SiteSection
+from news.models import NewsEntry, SiteSection, MediaFile
 
 
 class SiteSectionAdmin(admin.ModelAdmin):
@@ -80,5 +80,11 @@ class NewsEntryAdmin(admin.ModelAdmin):
     get_site_section.short_description = 'Раздел'
 
 
+class MediaFileAdmin(admin.ModelAdmin):
+    list_display = ('title', 'file', 'members_only', 'created_at')
+    ordering = ('-created_at', )
+
+
 admin.site.register(NewsEntry, NewsEntryAdmin)
 admin.site.register(SiteSection, SiteSectionAdmin)
+admin.site.register(MediaFile, MediaFileAdmin)

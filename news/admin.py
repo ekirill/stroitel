@@ -7,7 +7,9 @@ from news.models import NewsEntry, SiteSection, MediaFile
 
 
 class SiteSectionAdmin(admin.ModelAdmin):
-    ordering = ('title',)
+    ordering = ('parent', 'order', 'title')
+    list_display = ('__str__', 'order')
+    list_editable = ('order',)
 
 
 class SiteSectionInlineFormSet(forms.BaseInlineFormSet):
@@ -52,6 +54,7 @@ class NewsEntryAdmin(admin.ModelAdmin):
     form = NewsEntryForm
     ordering = ('-published_at',)
     list_display = ('title', 'published_at', 'get_site_section', 'get_is_public')
+
 
     inlines = [
         SiteSectionInline,

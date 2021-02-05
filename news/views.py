@@ -72,14 +72,14 @@ class SiteSectionView(ListView):
 
     @cached_property
     def child_sections(self):
-        return list(SiteSection.objects.filter(parent=self.root_section).order_by('title').all())
+        return list(SiteSection.objects.filter(parent=self.root_section).order_by('order', 'title').all())
 
     @property
     def extra_context(self):
         ctx = {
             'page': self.root_section.slug,
             'section': self.site_section,
-            'child_sections': list(SiteSection.objects.filter(parent=self.root_section).order_by('title').all()),
+            'child_sections': self.child_sections,
         }
 
         return ctx

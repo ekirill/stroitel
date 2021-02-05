@@ -14,6 +14,7 @@ class SiteSection(models.Model):
         null=True, blank=True,
         on_delete=models.SET_NULL,
     )
+    order = models.IntegerField('Очередность', default=100)
 
     def __str__(self):
         if self.parent:

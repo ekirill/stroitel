@@ -18,11 +18,21 @@ body {
 
 #topName {
     font-weight: bolder;
-    font-size: 2.3em;
+    font-size: 1.3em;
 }
 #topSubName {
-    font-size: 1em;
+    font-size: 0.7em;
 }
+@media (min-width: 600px) {
+    #topName {
+        font-weight: bolder;
+        font-size: 2.3em;
+    }
+    #topSubName {
+        font-size: 1em;
+    }
+}
+
 #mainNavbar .nav-item {
     font-size: 1.1em;
 }

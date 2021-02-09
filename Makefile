@@ -32,3 +32,6 @@ clean:
 
 dev-run:
 	docker-compose -f ./docker-compose.yaml -f ./docker-compose-dev.yaml up
+
+db-dump:
+	docker-compose -f ./docker-compose.yaml exec db pg_dump -U stroi -d stroitel --format=plain > ./dump.sql

@@ -107,6 +107,14 @@ class GuideListView(SiteSectionView):
         return get_object_or_404(SiteSection, slug='guide')
 
 
+class DocsListView(SiteSectionView):
+    queryset = NewsEntry.objects.order_by('-published_at')
+
+    @cached_property
+    def site_section(self):
+        return get_object_or_404(SiteSection, slug='documents')
+
+
 class InitiativesListView(SiteSectionView):
     queryset = NewsEntry.objects.order_by('-published_at')
 

@@ -1,8 +1,8 @@
 <div class="row">
-  <div class="col-md-3">
-    {% for section in child_sections %}
-      <div class="border-bottom border-1">
-        <a href="{% url 'site_section' slug=section.slug %}">{{ section.title }}</a>
+  <div id="leftMenu" class="col-md-3">
+    {% for menu_section in child_sections %}
+      <div class="menuItem{% if menu_section.slug == section.slug %} active{% endif %}">
+        <a href="{% url 'site_section' slug=menu_section.slug %}">{{ menu_section.title }}</a>
       </div>
     {% endfor %}
   </div>

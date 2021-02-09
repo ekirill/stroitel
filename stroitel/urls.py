@@ -19,7 +19,7 @@ from django.views.generic import RedirectView
 
 from core.auth.views import register, LoginView, LogoutView
 from core.views import contacts
-from news.views import NewsListView, GuideListView, InitiativesListView
+from news.views import NewsListView, GuideListView, InitiativesListView, DocsListView
 
 
 favicon_view = RedirectView.as_view(url='/static/favicon.ico', permanent=True)
@@ -31,6 +31,7 @@ urlpatterns = [
 
     path('', NewsListView.as_view(), name='news_list'),
     path('guide/', GuideListView.as_view(), name='guide_list'),
+    path('docs/', DocsListView.as_view(), name='docs_list'),
     path('initiatives/', InitiativesListView.as_view(), name='initiatives_list'),
 
     path('site/', include('news.urls')),

@@ -18,10 +18,10 @@ body {
 
 #topName {
     font-weight: bolder;
-    font-size: 1.3em;
+    font-size: 1.8em;
 }
 #topSubName {
-    font-size: 0.7em;
+    font-size: 1em;
 }
 @media (min-width: 600px) {
     #topName {

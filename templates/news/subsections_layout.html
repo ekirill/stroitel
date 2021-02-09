@@ -1,5 +1,5 @@
 <div class="row">
-  <div id="leftMenu" class="col-md-3">
+  <div id="leftMenu" class="col-md-3 mb-5">
     {% for menu_section in child_sections %}
       <div class="menuItem{% if menu_section.slug == section.slug %} active{% endif %}">
         <a href="{% url 'site_section' slug=menu_section.slug %}">{{ menu_section.title }}</a>

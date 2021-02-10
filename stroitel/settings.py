@@ -136,3 +136,9 @@ STATIC_ROOT = BASE_DIR / "htdocs"
 
 MEDIA_ROOT = '/mnt/media'
 MEDIA_URL = 'site/media/'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'contentsCss': ['/static/css/ckeditor_init.css', ],
+    },
+}

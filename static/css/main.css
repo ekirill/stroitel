@@ -82,7 +82,6 @@ a:hover {
     padding: 0.7em 1em;
 }
 #leftMenu .menuItem.active {
-    /*border: solid 2px #ccc;*/
     background-color: #f8f9fa;
     color: rgb(120, 58, 164);
 }

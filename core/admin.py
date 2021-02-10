@@ -5,10 +5,12 @@ from core.services.auth import is_stroi_staff
 
 
 class StroiUserAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('username', 'phone')
 
 
 class StroiKnownPhoneAdmin(admin.ModelAdmin):
+    list_display = ('phone', 'description')
+
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         is_stroi_staff.cache_clear()

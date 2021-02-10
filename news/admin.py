@@ -67,7 +67,6 @@ class NewsEntryAdmin(admin.ModelAdmin):
     get_is_public.boolean = True
     get_is_public.admin_order_field = 'members_only'
 
-
     def get_queryset(self, request):
         qs = super().get_queryset(request)
 

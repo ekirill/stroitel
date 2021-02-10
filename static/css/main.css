@@ -94,3 +94,9 @@ a:hover {
 #leftMenu .menuItem a:hover {
     text-decoration: none;
 }
+.bg-black {
+    background-color: #000;
+}
+footer.footer {
+    height: 140px;
+}

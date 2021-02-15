@@ -1,9 +1,12 @@
 body {
     background-color: #fff;
 }
+#topBar, #toMain {
+    color: #fff;
+    text-decoration: none;
+}
 #topBar {
     background: url("/static/img/logo.jpg") #0e1e09 no-repeat center;
-    color: #fff;
     height: 140px;
 }
 
@@ -32,8 +35,10 @@ body {
         font-size: 1em;
     }
 }
-#mainNavbar {
-    padding-bottom: 0;
+@media (min-width: 992px) {
+    #mainNavbar {
+        padding-bottom: 0;
+    }
 }
 #mainNavbar .nav-item {
     font-size: 1.1em;
@@ -100,3 +105,13 @@ a:hover {
 footer.footer {
     height: 140px;
 }
+#mainDropDown {
+    background-color: #ccc;
+    border-color: #ccc;
+    color: #333;
+    font-weight: bold;
+}
+/*#mainDropDown svg{*/
+/*    -webkit-filter: invert(100%);*/
+/*    filter: invert(100%);*/
+/*}*/

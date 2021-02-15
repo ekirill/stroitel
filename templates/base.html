@@ -57,10 +57,10 @@
   <div id="topBar" class="align-middle">
     <div class="container h-100">
       <div class="row h-100">
-        <div class="col-sm-12 col-md-6 my-auto">
+        <div class="col-sm-12 col-md-6 my-auto"><a href="/" id="toMain">
             <span id="topName">СНТ Строитель</span><br>
             <span id="topSubName">Москва, пос. Воскресенское</span>
-        </div>
+        </a></div>
         <div class="col-sm-12 col-md-6 text-right my-auto">
           <div class="btn-group" role="group" aria-label="Аутентификация">
           {% if not user.is_authenticated %}
@@ -79,15 +79,23 @@
   <nav id="mainNavbar" class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <button
-          class="navbar-toggler"
+          class="navbar-toggler offset-2 col-8 text-uppercase"
           type="button"
           data-toggle="collapse"
           data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
+          id="mainDropDown"
       >
-        <span class="navbar-toggler-icon"></span>
+        <span>
+          {% if page == 'news' %}Новости
+          {% elif page == 'guide' %}Гид по СНТ
+          {% elif page == 'documents' %}Документы
+          {% elif page == 'initiatives' %}Инициативы
+          {% elif page == 'contacts' %}Контакты
+          {% endif %}&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="0.7em" height="0.7em" viewBox="0 0 24 24"><path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg>
+        </span>
       </button>
 
       <!-- Links -->

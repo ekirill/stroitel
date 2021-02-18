@@ -122,3 +122,39 @@ footer.footer {
     color: #333;
     font-weight: bold;
 }
+
+.commentsBar {
+    background-color: #bbb !important;
+}
+.commentsBar a {
+    color: #000;
+}
+.commentsBar a:hover {
+    color: #000;
+    text-decoration: none;
+}
+.commentsBar img {
+    width: 1em;
+    height: 1em;
+}
+.commentItem {
+    border-top: 2px solid #fff;
+    background-color: #efefef;
+}
+.commentItem .when {
+    font-size: 0.7em;
+    color: #666;
+}
+.commentItem .author {
+    margin-top: 1em;
+    font-size: 0.7em;
+    font-weight: bold;
+}
+.commentsContainer {
+    background-color: #ddd;
+}
+.commentsCaption {
+    margin-top: 2em;
+    margin-bottom: 0;
+    padding: 1em;
+}

@@ -1,0 +1,6 @@
+{% load static %}
+{% if user.is_authenticated %}
+  <div class="badge bg-secondary commentsBar">
+    <a href="{% url 'news_detail' pk=entry.pk %}#comments">Обсуждение: <strong>{{ entry.comment_count }}</strong> <img alt="comment" src="{% static 'img/comment_bubble.png' %}"></a>
+  </div>
+{% endif %}

@@ -5,4 +5,6 @@
   <span class="text-left mb-5 entryDate text-lowercase">{{ object.published_at | date:"d F Y, D" }}</span>
   <h2 class="font-weight-bolder mt-3 mb-4">{{ object.title }}</h2>
   <p>{{ object.full_text | safe }}</p>
+
+  {% include 'social/comments/comments_list.html' %}
 {% endblock content %}

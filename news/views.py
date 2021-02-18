@@ -1,7 +1,6 @@
-from urllib.parse import urlencode, quote_plus
+from urllib.parse import quote_plus
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import redirect_to_login
 from django.db.models import Prefetch
 from django.http import HttpResponse
@@ -11,6 +10,7 @@ from django.views.generic import ListView, DetailView
 
 from news.models import NewsEntry, SiteSection
 from news.services.media import is_members_only
+from social.services.comments import annotate_news_with_comments_info, get_grouped_comments
 
 
 class NewsEntryView(DetailView):
@@ -44,14 +44,18 @@ class NewsEntryView(DetailView):
 
     @property
     def extra_context(self):
+        ctx = {
+            'comments': get_grouped_comments(self.get_object()),
+        }
         if self.site_section:
+            ctx['page'] = self.site_section.slug
             if self.site_section.parent:
-                return {
+                ctx.update({
                     'page': self.site_section.parent.slug,
                     'sub_page': self.site_section.slug,
-                }
+                })
 
-            return {'page': self.site_section.slug}
+        return ctx
 
 
 class SiteSectionView(ListView):
@@ -83,6 +87,12 @@ class SiteSectionView(ListView):
         }
 
         return ctx
+
+    def paginate_queryset(self, queryset, page_size):
+        paginator, page, object_list, has_other_pages = super().paginate_queryset(queryset, page_size)
+        object_list = list(object_list)
+        annotate_news_with_comments_info(object_list)
+        return paginator, page, object_list, has_other_pages
 
     def get(self, request, *args, **kwargs):
         if not self.site_section.parent and len(self.child_sections):

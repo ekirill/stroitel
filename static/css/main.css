@@ -84,10 +84,9 @@ a:hover {
 #leftMenu .menuItem {
     font-size: 1.1em;
     font-weight: bold;
-    padding: 0.7em 1em;
 }
 #leftMenu .menuItem.active {
-    background-color: #f8f9fa;
+    background-color: #e8e8e8;
     color: rgb(120, 58, 164);
 }
 #leftMenu .menuItem a {
@@ -98,6 +97,18 @@ a:hover {
 }
 #leftMenu .menuItem a:hover {
     text-decoration: none;
+}
+#newsList {
+    margin-top: 0.8em;
+}
+@media (min-width: 992px) {
+    #leftMenu .menuItem {
+        padding: 0.7em 1em;
+        width: 100%;
+    }
+    #newsList {
+        margin-top: 2em;
+    }
 }
 .bg-black {
     background-color: #000;
@@ -111,7 +122,3 @@ footer.footer {
     color: #333;
     font-weight: bold;
 }
-/*#mainDropDown svg{*/
-/*    -webkit-filter: invert(100%);*/
-/*    filter: invert(100%);*/
-/*}*/

@@ -1,5 +1,5 @@
 <div class="row">
-  <div id="leftMenu" class="col-md-3 mb-5">
+  <div id="leftMenu" class="col-lg-3 mb-5">
     {% for menu_section in child_sections %}
       <div class="menuItem{% if menu_section.slug == section.slug %} active{% endif %}">
         <a href="{% url 'site_section' slug=menu_section.slug %}">{{ menu_section.title }}</a>
@@ -7,7 +7,7 @@
     {% endfor %}
   </div>
 
-  <div class="col-md-9">
+  <div class="col-lg-9">
     {% include 'news/entries.html' with entries=object_list %}
   </div>
 </div>

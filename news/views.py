@@ -3,13 +3,14 @@ from urllib.parse import quote_plus
 from django.conf import settings
 from django.contrib.auth.views import redirect_to_login
 from django.db.models import Prefetch
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, resolve_url
 from django.utils.functional import cached_property
 from django.views.generic import ListView, DetailView
 
 from news.models import NewsEntry, SiteSection
 from news.services.media import is_members_only
+from social.models import Comment
 from social.services.comments import annotate_news_with_comments_info, get_grouped_comments
 
 
@@ -56,6 +57,27 @@ class NewsEntryView(DetailView):
                 })
 
         return ctx
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.members_only and not request.user.is_authenticated:
+            return redirect_to_login(request.build_absolute_uri(), settings.LOGIN_URL, 'next')
+
+        message = (request.POST.get('message') or '').strip()
+        if message:
+            # защита от двойного нажатия
+            user_latest_comment = Comment.objects.filter(
+                author=request.user, entry=obj
+            ).order_by('-published_at').first()
+            if not user_latest_comment or user_latest_comment.message != message:
+                Comment.objects.create(
+                    entry=obj,
+                    author=request.user,
+                    message=message[:settings.MAX_COMMENT_SIZE],
+                )
+
+        redirect_url = resolve_url('news_detail', pk=obj.pk) + '#commentsLatest'
+        return HttpResponseRedirect(redirect_url)
 
 
 class SiteSectionView(ListView):

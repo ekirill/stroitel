@@ -5,6 +5,7 @@
 <ul class="list-group list-group-flush">
 {% for comment in comments %}
   <li class="list-group-item commentItem">
+    {% if forloop.last %}<a id="commentsLatest"></a>{% endif %}
     <div class="message">{{ comment.message }}</div>
     <div><span class="author">Участок {{ comment.author.username }}</span>&nbsp;<span class="when">{{ comment.published_at | date:"d F Y, H:i" }}</span></div>
   </li>

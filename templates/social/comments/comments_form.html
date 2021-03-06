@@ -1,0 +1,14 @@
+{% if user.is_authenticated %}
+<form method="POST" action="{% url 'news_detail' pk=entry.pk %}" class="form-group commentForm">
+    {% csrf_token %}
+    <div>
+        <textarea
+                id="commentMessage"
+                class="form-control"
+                name="message"
+                placeholder="Напишите свой комментарий здесь"
+        ></textarea>
+    </div>
+    <button type="submit" class="btn btn-success mt-3">Отправить</button>
+</form>
+{% endif %}

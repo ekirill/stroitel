@@ -143,3 +143,5 @@ CKEDITOR_CONFIGS = {
         'contentsCss': ['/static/css/ckeditor_init.css', ],
     },
 }
+
+MAX_COMMENT_SIZE = 50000

@@ -1,6 +1,7 @@
 <div class="mb-5">
   <h3 class="font-weight-bolder mb-2">{{ entry.title }}</h3>
-  <span class="text-left mb-4 entryDate text-lowercase">{{ entry.published_at | date:"d F Y, D" }}</span>
+  <span class="text-left mb-4 mr-4 entryDate text-lowercase">{{ entry.published_at | date:"d F Y, D" }}</span>
+  {% include 'social/comments_bar.html' %}
   {% if not entry.members_only or user.is_authenticated %}
     <p>{{ entry.short_text | safe }}</p>
     {% if entry.has_details %}<p><a href="{% url 'news_detail' pk=entry.pk %}">Подробнее...</a></p>{% endif %}
@@ -11,5 +12,4 @@
       <p>Новость доступна только авторизованным на сайте членам СНТ.</p>
     {% endif %}
   {% endif %}
-  {% include 'social/comments_bar.html' %}
 </div>

@@ -54,7 +54,7 @@ body {
     color: rgb(120 58 164);
     border-bottom: 5px solid rgb(120, 58, 164);
 }
-.authButton.btn-primary {
+.authButton.btn-primary, .commentPostButton.btn-primary {
     background-color: rgb(120, 58, 164);
 }
 .authButton.btn-outline-secondary {
@@ -123,14 +123,17 @@ footer.footer {
     font-weight: bold;
 }
 
+.commentsBar.badge {
+    background-color: rgb(120, 58, 164) !important;
+}
 .commentsBar {
     background-color: #bbb !important;
 }
 .commentsBar a {
-    color: #000;
+    color: #fff;
 }
 .commentsBar a:hover {
-    color: #000;
+    color: #fff;
     text-decoration: none;
 }
 .commentsBar img {
@@ -142,13 +145,13 @@ footer.footer {
     background-color: #efefef;
 }
 .commentItem .when {
-    font-size: 0.7em;
+    margin-left: 1em;
+    font-size: 0.8em;
     color: #666;
 }
 .commentItem .author {
-    margin-top: 1em;
-    font-size: 0.7em;
-    font-weight: bold;
+    font-size: 0.8em;
+    color: rgb(120, 58, 164);
 }
 .commentsContainer {
     background-color: #ddd;

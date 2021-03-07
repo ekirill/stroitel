@@ -111,6 +111,7 @@ LOGOUT_REDIRECT_URL = '/'
 
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_AGE = 365 * 24 * 60 * 60
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/

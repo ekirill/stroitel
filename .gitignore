@@ -2,3 +2,5 @@
 .idea/
 media_storage/
 dump.sql
+node_modules/
+dist/

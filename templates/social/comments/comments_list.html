@@ -1,8 +1,9 @@
 {% if user.is_authenticated %}
-<div class="commentsContainer mb-5">
 <a id="comments"></a>
+<div class="commentsContainer mb-5">
 <h5 class="commentsCaption">Обсуждение</h5>
 <ul class="list-group list-group-flush">
+{% if not comments %}<a id="commentsLatest"></a>{% endif %}
 {% for comment in comments %}
   <li class="list-group-item commentItem">
     {% if forloop.last %}<a id="commentsLatest"></a>{% endif %}

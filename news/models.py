@@ -83,7 +83,7 @@ class NewsEntryBind(models.Model):
 
 def get_upload_prefix(instance, filename):
     filename = filename.lower()
-    prefix = hashlib.md5(filename.encode('UTF-8')).hexdigest()[:5]
+    prefix = hashlib.md5(filename.encode('UTF-8')).hexdigest()[-2:]
     return f"{prefix}/{filename}"
 
 

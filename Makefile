@@ -38,9 +38,11 @@ db-dump:
 
 db-restore:
 	docker cp ~/stroitel_dump.sql stroitel_db_1:/dump.sql
+	docker-compose -f ./docker-compose.yaml stop app;
 	docker-compose -f ./docker-compose.yaml exec db psql -U stroi -d postgres -c 'DROP DATABASE stroitel';
 	docker-compose -f ./docker-compose.yaml exec db psql -U stroi -d postgres -c 'CREATE DATABASE stroitel';
 	docker-compose -f ./docker-compose.yaml exec db psql -U stroi -d stroitel -f /dump.sql
+	docker-compose -f ./docker-compose.yaml up -d;
 
 db-scp:
 	scp ekirill@ekirill.ru:/mnt/storage/stroitel/dump.sql.gz ~/stroitel_dump.sql.gz

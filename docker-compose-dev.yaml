@@ -5,9 +5,9 @@ services:
     volumes:
       - ./:/app
       - ./media_storage:/mnt/media
-    command: "python ./manage.py runserver 0.0.0.0:8888"
+    command: "python ./manage.py runserver 0.0.0.0:8000"
     ports:
-      - "8888:8888"
+      - "8888:8000"
 
   nginx:
     volumes:

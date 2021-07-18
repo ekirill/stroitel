@@ -2,31 +2,48 @@ from django.db import models
 from django.utils.timezone import now
 
 
-SERVICE_ELECTRICITY_1 = 'electricity_1'
-SERVICE_ELECTRICITY_2 = 'electricity_2'
-SERVICE_ELECTRICITY_3 = 'electricity_3'
+SERVICE_ELECTRICITY_1_1 = 'electricity_1_1'
+SERVICE_ELECTRICITY_2_1 = 'electricity_2_1'
+SERVICE_ELECTRICITY_2_2 = 'electricity_2_2'
+SERVICE_ELECTRICITY_3_1 = 'electricity_3_1'
+SERVICE_ELECTRICITY_3_2 = 'electricity_3_2'
+SERVICE_ELECTRICITY_3_3 = 'electricity_3_3'
 SERVICE_WATER = 'water'
 
-SERVICE_TYPE_ELECTRICITY = "electricity"
+SERVICE_TYPE_ELECTRICITY_ONE_TARIFF = "electricity_1_tariff"
+SERVICE_TYPE_ELECTRICITY_TWO_TARIFF = "electricity_2_tariff"
+SERVICE_TYPE_ELECTRICITY_THREE_TARIFF = "electricity_3_tariff"
 SERVICE_TYPE_WATER = "water"
 
 SERVICE_CHOICES = (
-    (SERVICE_ELECTRICITY_1, "Электричество (тариф 1)"),
-    (SERVICE_ELECTRICITY_2, "Электричество (тариф 2)"),
-    (SERVICE_ELECTRICITY_3, "Электричество (тариф 3)"),
+    (SERVICE_ELECTRICITY_1_1, "Электричество однотарифный тариф"),
+    (SERVICE_ELECTRICITY_2_1, "Электричество двухтарифный тариф 1"),
+    (SERVICE_ELECTRICITY_2_2, "Электричество двухтарифный тариф 2"),
+    (SERVICE_ELECTRICITY_3_1, "Электричество трехтарифный тариф 1"),
+    (SERVICE_ELECTRICITY_3_2, "Электричество трехтарифный тариф 2"),
+    (SERVICE_ELECTRICITY_3_3, "Электричество трехтарифный тариф 3"),
     (SERVICE_WATER, "Вода питьевая"),
 )
 
 SERVICE_TYPE_CHOICES = (
-    (SERVICE_TYPE_ELECTRICITY, "Электричество"),
+    (SERVICE_TYPE_ELECTRICITY_ONE_TARIFF, "Электричество однотарифный"),
+    (SERVICE_TYPE_ELECTRICITY_TWO_TARIFF, "Электричество двухтарифный"),
+    (SERVICE_TYPE_ELECTRICITY_THREE_TARIFF, "Электричество трехтарифный"),
     (SERVICE_TYPE_WATER, "Вода питьевая"),
 )
 
 SERVICES_BY_TYPE = {
-    SERVICE_TYPE_ELECTRICITY: (
-        SERVICE_ELECTRICITY_1,
-        SERVICE_ELECTRICITY_2,
-        SERVICE_ELECTRICITY_3,
+    SERVICE_TYPE_ELECTRICITY_ONE_TARIFF: (
+        SERVICE_ELECTRICITY_1_1,
+    ),
+    SERVICE_TYPE_ELECTRICITY_TWO_TARIFF: (
+        SERVICE_ELECTRICITY_2_1,
+        SERVICE_ELECTRICITY_2_2,
+    ),
+    SERVICE_TYPE_ELECTRICITY_THREE_TARIFF: (
+        SERVICE_ELECTRICITY_3_1,
+        SERVICE_ELECTRICITY_3_2,
+        SERVICE_ELECTRICITY_3_3,
     ),
     SERVICE_TYPE_WATER: (
         SERVICE_WATER,
@@ -34,8 +51,9 @@ SERVICES_BY_TYPE = {
 }
 
 SERVICE_TYPE_BY_SERVICE = {}
-for t, s in SERVICES_BY_TYPE.items():
-    SERVICE_TYPE_BY_SERVICE[s] = t
+for t, services in SERVICES_BY_TYPE.items():
+    for s in services:
+        SERVICE_TYPE_BY_SERVICE[s] = t
 
 
 class Tariff(models.Model):
@@ -64,7 +82,8 @@ class Counter(models.Model):
         verbose_name_plural = "Счетчики"
 
     def __str__(self):
-        return f"Счетчик уч {self.house}[{self.get_service_type_display()}]"
+        desc = f", {self.description}" if self.description else ""
+        return f"Счетчик уч {self.house} {self.get_service_type_display()}{desc}"
 
 
 class CounterHistory(models.Model):

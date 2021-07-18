@@ -1,3 +1,8 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def billing(request):
+    context = {
+
+    }
+    return render(request, "billing/index.html", context)

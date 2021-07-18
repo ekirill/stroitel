@@ -55,7 +55,6 @@ class NewsEntryAdmin(admin.ModelAdmin):
     ordering = ('-published_at',)
     list_display = ('title', 'published_at', 'get_site_section', 'get_is_public')
 
-
     inlines = [
         SiteSectionInline,
     ]

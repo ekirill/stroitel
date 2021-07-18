@@ -35,6 +35,7 @@ urlpatterns = [
     path('initiatives/', InitiativesListView.as_view(), name='initiatives_list'),
 
     path('site/', include('news.urls')),
+    path('billing/', include('billing.urls')),
 
     path('contacts/', contacts, name='contacts'),
 

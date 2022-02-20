@@ -54,7 +54,7 @@ body {
     color: rgb(120 58 164);
     border-bottom: 5px solid rgb(120, 58, 164);
 }
-.authButton.btn-primary, .commentPostButton.btn-primary {
+.authButton.btn-primary, .commentPostButton.btn-primary, .votingPostButton.btn-primary {
     background-color: rgb(120, 58, 164);
 }
 .authButton.btn-outline-secondary {
@@ -144,7 +144,7 @@ footer.footer {
     border-top: 2px solid #fff;
     background-color: #efefef;
 }
-.commentItem .when {
+.commentItem .when, .variantItem .when {
     margin-left: 1em;
     font-size: 0.8em;
     color: #666;
@@ -156,8 +156,59 @@ footer.footer {
 .commentsContainer {
     background-color: #ddd;
 }
-.commentsCaption {
+.commentsCaption, .votingCaption {
     margin-top: 2em;
     margin-bottom: 0;
     padding: 1em;
+}
+.votingQuestion {
+    margin-bottom: 0;
+    padding: .7em;
+}
+.votingInfo {
+    margin-left: 1em;
+    margin-bottom: 1em;
+    font-size: .8em;
+}
+.variantItem input[type="checkbox"] {
+    margin-right: 1em;
+}
+.variantItem input[type="text"] {
+    margin-top: 0.6em;
+    width: 100%;
+}
+.votesCnt {
+    font-size: .4em;
+}
+.votesCnt .cnt {
+    font-size: 2em;
+    font-weight: bold;
+}
+.variantItem .variantAuthor {
+    font-size: 0.5em;
+}
+.variantItem .author {
+    font-size: 1.5em;
+    color: rgb(120, 58, 164);
+}
+.voteAccepted {
+    font-size: 0.8em;
+    color: rgb(58, 120, 58);
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    margin-left: 0;
+}
+.votingContainer {
+    background-color: rgb(248, 223, 124);
+}
+.variantItem {
+    border-top: 2px solid #fff;
+    background-color: rgb(255, 247, 226);
+}
+.activeVotingsList {
+    padding: .5em;
+    background-color: rgb(255, 247, 226);
+}
+.votingBite {
+    background-color: rgb(248, 223, 124);
 }

@@ -4,3 +4,4 @@ media_storage/
 dump.sql
 node_modules/
 dist/
+__pycache__/

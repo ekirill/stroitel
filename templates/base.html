@@ -12,7 +12,7 @@
   <!-- Material Design Bootstrap -->
   <link rel="stylesheet" href="{% static 'css/bs/bootstrap.min.css'%}" />
 
-  <link rel="stylesheet" href="{% static 'css/main.css' %}?v6" />
+  <link rel="stylesheet" href="{% static 'css/main.css' %}?v7" />
 
   <!-- Google Fonts Roboto -->
     <link
@@ -94,6 +94,7 @@
           {% elif page == 'guide' %}Гид по СНТ
           {% elif page == 'documents' %}Документы
           {% elif page == 'initiatives' %}Инициативы
+          {% elif page == 'votings' %}Голосования
           {% elif page == 'contacts' %}Контакты
           {% endif %}&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="0.7em" height="0.7em" viewBox="0 0 24 24"><path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg>
         </span>
@@ -120,6 +121,11 @@
           <li class="nav-item mr-5{% if page == 'initiatives' %} active{% endif %}">
             <a class="nav-link text-uppercase" href="{% url 'initiatives_list' %}">
               Инициативы
+            </a>
+          </li>
+            <li class="nav-item mr-5{% if page == 'votings' %} active{% endif %}">
+            <a class="nav-link text-uppercase" href="{% url 'votings_list' %}">
+              Голосования
             </a>
           </li>
           <li class="nav-item{% if page == 'contacts' %} active{% endif %}">

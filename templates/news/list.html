@@ -2,6 +2,9 @@
 {% load static %}
 
 {% block content %}
+  {% if active_votings %}
+    {% include 'social/voting/active_votings.html' %}
+  {% endif %}
   <div id="newsList">
   {% if child_sections %}
     {% include 'news/subsections_layout.html' %}

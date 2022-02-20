@@ -6,6 +6,7 @@
   <h2 class="font-weight-bolder mt-3 mb-4">{{ object.title }}</h2>
   <p>{{ object.full_text | safe }}</p>
 
+  {% include 'social/voting/voting.html' with entry=object %}
   {% include 'social/comments/comments_list.html' with entry=object %}
   {% include 'social/comments/comments_form.html' with entry=object %}
 {% endblock content %}

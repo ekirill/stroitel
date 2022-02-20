@@ -2,6 +2,7 @@ from urllib.parse import quote_plus
 
 from django.conf import settings
 from django.contrib.auth.views import redirect_to_login
+from django.db import transaction
 from django.db.models import Prefetch
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, resolve_url
@@ -10,8 +11,9 @@ from django.views.generic import ListView, DetailView
 
 from news.models import NewsEntry, SiteSection
 from news.services.media import is_members_only
-from social.models import Comment
+from social.models import Comment, VotingVariant, Vote
 from social.services.comments import annotate_news_with_comments_info, get_grouped_comments
+from social.services.voting import get_voting, get_active_votings
 
 
 class NewsEntryView(DetailView):
@@ -47,6 +49,7 @@ class NewsEntryView(DetailView):
     def extra_context(self):
         ctx = {
             'comments': get_grouped_comments(self.get_object()),
+            'voting': get_voting(self.get_object(), self.request.user),
         }
         if self.site_section:
             ctx['page'] = self.site_section.slug
@@ -58,11 +61,8 @@ class NewsEntryView(DetailView):
 
         return ctx
 
-    def post(self, request, *args, **kwargs):
+    def _save_comment(self, request):
         obj = self.get_object()
-        if obj.members_only and not request.user.is_authenticated:
-            return redirect_to_login(request.build_absolute_uri(), settings.LOGIN_URL, 'next')
-
         message = (request.POST.get('message') or '').strip()
         if message:
             # защита от двойного нажатия
@@ -76,7 +76,62 @@ class NewsEntryView(DetailView):
                     message=message[:settings.MAX_COMMENT_SIZE],
                 )
 
-        redirect_url = resolve_url('news_detail', pk=obj.pk) + '#commentsLatest'
+    @transaction.atomic
+    def _save_vote(self, request):
+        obj = self.get_object()
+        voting = obj.votings.first()
+        if not voting or not voting.is_active:
+            return
+
+        variant_ids = set()
+
+        new_variant = request.POST.get("voting_variant_new_text")
+        if new_variant:
+            variant, _ = VotingVariant.objects.get_or_create(
+                voting=voting, variant=new_variant, defaults={"author": request.user}
+            )
+            variant_ids.add(variant.pk)
+
+        for arg, val in request.POST.items():
+            if arg.startswith("vote_for_"):
+                try:
+                    variant_id = int(arg.split("_")[-1])
+                    variant_ids.add(variant_id)
+                except (TypeError, ValueError):
+                    pass
+
+        existing_votes = set(
+            Vote.objects.filter(
+                variant__voting=voting, user=request.user
+            ).values_list("variant_id", flat=True)
+        )
+
+        del_variant_ids = existing_votes.difference(variant_ids)
+        new_variant_ids = variant_ids.difference(existing_votes)
+
+        new_votes = []
+        for v_id in new_variant_ids:
+            new_votes.append(Vote(user=request.user, variant_id=v_id))
+        Vote.objects.bulk_create(new_votes)
+
+        for variant_id in del_variant_ids:
+            Vote.objects.filter(variant_id=variant_id, user=request.user).delete()
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.members_only and not request.user.is_authenticated:
+            return redirect_to_login(request.build_absolute_uri(), settings.LOGIN_URL, 'next')
+
+        anchor = ''
+        submit = request.POST.get('submit')
+        if submit == 'comment':
+            self._save_comment(request)
+            anchor = '#commentsLatest'
+        elif submit == 'vote':
+            self._save_vote(request)
+            anchor = '#voting'
+
+        redirect_url = resolve_url('news_detail', pk=obj.pk) + anchor
         return HttpResponseRedirect(redirect_url)
 
 
@@ -124,35 +179,40 @@ class SiteSectionView(ListView):
 
 
 class NewsListView(SiteSectionView):
-    queryset = NewsEntry.objects.order_by('-published_at')
-
     @cached_property
     def site_section(self):
         return get_object_or_404(SiteSection, slug='news')
 
+    @property
+    def extra_context(self):
+        ctx = super().extra_context
+        ctx['active_votings'] = get_active_votings()
+
+        return ctx
+
 
 class GuideListView(SiteSectionView):
-    queryset = NewsEntry.objects.order_by('-published_at')
-
     @cached_property
     def site_section(self):
         return get_object_or_404(SiteSection, slug='guide')
 
 
 class DocsListView(SiteSectionView):
-    queryset = NewsEntry.objects.order_by('-published_at')
-
     @cached_property
     def site_section(self):
         return get_object_or_404(SiteSection, slug='documents')
 
 
 class InitiativesListView(SiteSectionView):
-    queryset = NewsEntry.objects.order_by('-published_at')
-
     @cached_property
     def site_section(self):
         return get_object_or_404(SiteSection, slug='initiatives')
+
+
+class VotingsListView(SiteSectionView):
+    @cached_property
+    def site_section(self):
+        return get_object_or_404(SiteSection, slug='votings')
 
 
 def media_access(request, prefix, path):

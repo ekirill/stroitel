@@ -1,0 +1,9 @@
+<div class="activeVotingsList p-2">
+    <h5 class="votingBite mt-3 p-1">Идет голосование</h5>
+    {% for voting in active_votings %}
+        <div class="activeVoting mt-4">
+            <h4 class="mb-2">{{ voting.question }}</h4>
+            <a href="{% url 'news_detail' pk=voting.entry_id %}"><button class="btn btn-primary bg-dark">Голосовать</button></a></p>
+        </div>
+    {% endfor %}
+</div>

@@ -88,7 +88,7 @@ DATABASES = {
         'NAME': 'stroitel',
         'USER': os.getenv('STROITEL_DB_USER', ''),
         'PASSWORD': os.getenv('STROITEL_DB_PASSWORD', ''),
-        'HOST': 'db',
+        'HOST': os.getenv('STROITEL_DB_HOST', 'db'),
         'PORT': '5432',
     }
 }

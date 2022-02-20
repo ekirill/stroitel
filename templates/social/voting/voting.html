@@ -1,0 +1,52 @@
+{% if voting %}
+    <a id="voting"></a>
+
+    {% if user.is_authenticated %}
+        {% if voting.voting.is_active %}
+            <form method="POST" action="{% url 'news_detail' pk=entry.pk %}" class="form-group votingForm">{% csrf_token %}
+                <div class="votingContainer">
+                    <h5 class="votingQuestion">{{ voting.voting.question }}</h5>
+                    <p class="votingInfo">Выберите один или несколько вариантов, затем нажмите "Сохранить".</p>
+                    <ul class="list-group list-group-flush">
+
+                    {% for variant in voting.variants_for_user.all %}
+                        <li class="list-group-item variantItem">
+                            <div class="variant"><input type="checkbox" name="vote_for_{{ variant.id }}" {% if variant.user_voted %}checked="checked"{% endif %}>&nbsp;{{ variant.variant }}</div>
+                            {% if variant.user_voted %}
+                                <div class="voteAccepted">Ваш голос принят</div>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                        <li class="list-group-item variantItem">
+                            <div class="variant">
+                                <div class="votingNewInfo">
+                                    Добавить свой вариант:
+                                </div>
+                                <input type="text" name="voting_variant_new_text" placeholder="Введите вариант ответа">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mt-3 mb-5 text-right">
+                    <button type="submit" name="submit" value="vote" class="btn btn-primary bg-dark votingPostButton">Сохранить</button>
+                </div>
+            </form>
+        {% else %}
+            <h5>Голосование окончено</h5>
+        {% endif %}
+
+        <div class="votingResults">
+            <h5>Текущие результаты голосования</h5>
+            <ul>
+            {% for variant in voting.voting_results %}
+                <li>{{ variant.variant }} - {{ variant.cnt }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <h5 class="votingCaption">Голосование</h5>
+        <p>Здесь проводится голосование для членов СНТ. Чтобы принять участие и посмотреть результаты, надо авторизоваться на сайте.</p>
+    {% endif %}
+
+{% endif %}

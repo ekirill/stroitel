@@ -1,53 +1,53 @@
 build:
-	docker-compose build
+	docker-compose -p stroitel build
 
 migrate: build
-	docker-compose run --rm app python /app/manage.py migrate
+	docker-compose -p stroitel run --rm app python /app/manage.py migrate
 
 up: migrate
-	docker-compose up -d
+	docker-compose -p stroitel up -d
 
 app-down:
-	docker-compose stop app && docker-compose rm app
+	docker-compose -p stroitel stop app && docker-compose rm app
 
 app-logs:
-	docker-compose logs -f app
+	docker-compose -p stroitel logs -f app
 
 deploy: build migrate app-down up
 
 shell:
-	docker-compose -f ./docker-compose.yaml -f ./docker-compose-dev.yaml run app bash
+	docker-compose -p stroitel -f ./docker-compose.yaml -f ./docker-compose-dev.yaml run app bash
 
 nginx-enter:
-	docker-compose -f ./docker-compose.yaml -f ./docker-compose-dev.yaml exec nginx bash
+	docker-compose -p stroitel -f ./docker-compose.yaml -f ./docker-compose-dev.yaml exec nginx bash
 
 makemigrations: build
-	docker-compose -f ./docker-compose.yaml -f ./docker-compose-dev.yaml run --rm app python /app/manage.py makemigrations
+	docker-compose -p stroitel -f ./docker-compose.yaml -f ./docker-compose-dev.yaml run --rm app python /app/manage.py makemigrations
 
 down:
-	docker-compose -f ./docker-compose.yaml -f ./docker-compose-dev.yaml down
+	docker-compose -p stroitel -f ./docker-compose.yaml -f ./docker-compose-dev.yaml down
 
 clean:
-	docker-compose -f ./docker-compose.yaml -f ./docker-compose-dev.yaml down -v
+	docker-compose -p stroitel -f ./docker-compose.yaml -f ./docker-compose-dev.yaml down -v
 
 dev-run:
-	docker-compose -f ./docker-compose.yaml -f ./docker-compose-dev.yaml up
+	docker-compose -p stroitel -f ./docker-compose.yaml -f ./docker-compose-dev.yaml up
 
 db-dump:
-	docker-compose -f ./docker-compose.yaml exec db pg_dump -U stroi -d stroitel --format=plain > ./dump.sql
+	docker-compose -p stroitel -f ./docker-compose.yaml exec db pg_dump -U stroi -d stroitel --format=plain > ./dump.sql
 
 db-restore:
 	docker cp ~/stroitel_dump.sql stroitel_db_1:/dump.sql
-	docker-compose -f ./docker-compose.yaml stop app;
-	docker-compose -f ./docker-compose.yaml exec db psql -U stroi -d postgres -c 'DROP DATABASE stroitel';
-	docker-compose -f ./docker-compose.yaml exec db psql -U stroi -d postgres -c 'CREATE DATABASE stroitel';
-	docker-compose -f ./docker-compose.yaml exec db psql -U stroi -d stroitel -f /dump.sql
-	docker-compose -f ./docker-compose.yaml up -d;
+	docker-compose -p stroitel -f ./docker-compose.yaml stop app;
+	docker-compose -p stroitel -f ./docker-compose.yaml exec db psql -U stroi -d postgres -c 'DROP DATABASE stroitel';
+	docker-compose -p stroitel -f ./docker-compose.yaml exec db psql -U stroi -d postgres -c 'CREATE DATABASE stroitel';
+	docker-compose -p stroitel -f ./docker-compose.yaml exec db psql -U stroi -d stroitel -f /dump.sql
+	docker-compose -p stroitel -f ./docker-compose.yaml up -d;
 
 db-scp:
 	scp ekirill@ekirill.ru:/mnt/storage/stroitel/dump.sql.gz ~/stroitel_dump.sql.gz
 	gunzip ~/stroitel_dump.sql.gz
-	docker-compose -f ./docker-compose.yaml up -d db
+	docker-compose -p stroitel -f ./docker-compose.yaml up -d db
 	sleep 20
 
 db-clone: db-scp db-restore

@@ -3,7 +3,7 @@ from urllib.parse import quote_plus
 from django.conf import settings
 from django.contrib.auth.views import redirect_to_login
 from django.db import transaction
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Count, Case, When
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, resolve_url
 from django.utils.functional import cached_property
@@ -141,7 +141,9 @@ class SiteSectionView(ListView):
 
     def get_queryset(self):
         return NewsEntry.objects.\
-            filter(site_sections=self.site_section).order_by('-published_at')
+            filter(site_sections=self.site_section).\
+            annotate(votings_cnt=Count("votings", )). \
+            order_by('-published_at')
 
     @cached_property
     def site_section(self):
@@ -164,6 +166,12 @@ class SiteSectionView(ListView):
         }
 
         return ctx
+
+    def get_paginate_by(self, queryset):
+        if self.root_section.slug == 'votings':
+            return 100
+
+        return self.paginate_by
 
     def paginate_queryset(self, queryset, page_size):
         paginator, page, object_list, has_other_pages = super().paginate_queryset(queryset, page_size)

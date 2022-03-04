@@ -44,13 +44,13 @@ class Voting(models.Model):
         return self.start_at <= now() <= self.end_at
 
     class Meta:
-        verbose_name = "Голосование"
-        verbose_name_plural = "Голосования"
+        verbose_name = "Опрос"
+        verbose_name_plural = "Опросы"
         index_together = ["start_at", "end_at"]
 
 
 class VotingVariant(models.Model):
-    voting = models.ForeignKey(Voting, verbose_name="Голосование", on_delete=models.CASCADE, related_name="variants")
+    voting = models.ForeignKey(Voting, verbose_name="Опрос", on_delete=models.CASCADE, related_name="variants")
     author = models.ForeignKey('core.StroiUser', verbose_name='Автор', null=True, on_delete=models.SET_NULL)
     published_at = models.DateTimeField('Дата публикации', default=now, db_index=True)
 

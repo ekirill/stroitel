@@ -1,9 +1,10 @@
 <div class="activeVotingsList p-2">
-    <h5 class="votingBite mt-3 p-1">Идет голосование</h5>
-    {% for voting in active_votings %}
-        <div class="activeVoting mt-4">
-            <h4 class="mb-2">{{ voting.question }}</h4>
-            <a href="{% url 'news_detail' pk=voting.entry_id %}"><button class="btn btn-primary bg-dark">Голосовать</button></a></p>
-        </div>
+    <h5 class="votingBite mt-3 p-1">Идут опросы</h5>
+    {% for section_slug, group in active_votings.items %}
+      <h4>{{ group.section_title }}</h4>
+      {% for voting in group.votings %}
+        <h5 class="mb-2">{{ voting.question }}</h5>
+      {% endfor %}
+      <a href="{% url 'site_section' slug=section_slug %}"><button class="btn btn-primary bg-dark">Принять участие</button></a></p>
     {% endfor %}
 </div>

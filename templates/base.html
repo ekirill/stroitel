@@ -122,12 +122,12 @@
             <a class="nav-link text-uppercase" href="{% url 'initiatives_list' %}">
               Инициативы
             </a>
-{#          </li> #}
- {#           <li class="nav-item mr-5{% if page == 'votings' %} active{% endif %}"> #}
- {#           <a class="nav-link text-uppercase" href="{% url 'votings_list' %}"> #}
- {#             Голосования #}
- {#           </a> #}
- {#         </li> #}
+          </li>
+          <li class="nav-item mr-5{% if page == 'votings' %} active{% endif %}">
+            <a class="nav-link text-uppercase" href="{% url 'votings_list' %}">
+              Опросы
+            </a>
+          </li>
           <li class="nav-item{% if page == 'contacts' %} active{% endif %}">
             <a class="nav-link text-uppercase" href="{% url 'contacts' %}">
               Контакты

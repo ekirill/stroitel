@@ -4,7 +4,11 @@
   {% include 'social/comments_bar.html' %}
   {% if not entry.members_only or user.is_authenticated %}
     <p>{{ entry.short_text | safe }}</p>
-    {% if entry.has_details %}<p><a href="{% url 'news_detail' pk=entry.pk %}">Подробнее...</a></p>{% endif %}
+    {% if entry.votings_cnt %}
+      <p><a href="{% url 'news_detail' pk=entry.pk %}"><button class="btn btn-primary bg-dark">Ответить на вопрос</button></a></p>
+    {% elif entry.has_details %}
+      <p><a href="{% url 'news_detail' pk=entry.pk %}">Подробнее...</a></p>
+    {% endif %}
   {% else %}
     {% if entry.not_members_placeholder %}
       <p>{{ entry.not_members_placeholder | safe }}</p>

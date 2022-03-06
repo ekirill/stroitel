@@ -36,7 +36,22 @@
             <h5>Голосование окончено</h5>
         {% endif %}
 
-        <div class="votingResults">
+        <div class="votingNavigation">
+            <div class="votingNext text-right">
+            {% if voting.next_entry %}
+                <a href="{% url 'news_detail' pk=voting.next_entry.pk %}"><button class="btn btn-primary bg-dark">К следующему вопросу</button></a>
+            {% else %}
+                <span class="noMoreVotes">Это последний вопрос опроса</span>
+            {% endif %}
+            </div>
+            {% if voting.prev_entry %}
+                <div class="votingBack mt-3 text-left">
+                    <a href="{% url 'news_detail' pk=voting.prev_entry.pk %}"><button class="btn btn-primary bg-dark">К предыдущему вопросу</button></a>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="votingResults mt-5">
             <h5>Текущие результаты голосования</h5>
             <ul>
             {% for variant in voting.voting_results %}

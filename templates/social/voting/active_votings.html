@@ -1,10 +1,14 @@
 <div class="activeVotingsList p-2">
     <h5 class="votingBite mt-3 p-1">Идут опросы</h5>
     {% for section_slug, group in active_votings.items %}
-      <h4>{{ group.section_title }}</h4>
+{#      <h4>{{ group.section_title }}</h4>#}
       {% for voting in group.votings %}
         <h5 class="mb-2">{{ voting.question }}</h5>
       {% endfor %}
-      <a href="{% url 'site_section' slug=section_slug %}"><button class="btn btn-primary bg-dark">Принять участие</button></a></p>
+      {% if user.is_authenticated %}
+        <a href="{% url 'news_detail' pk=group.votings.0.entry_id %}"><button class="btn btn-primary bg-dark">Принять участие</button></a></p>
+      {% else %}
+        <h4 class="mt-5">Принять участие могут только авторизованные на сайте члены СНТ.</h4>
+      {% endif %}
     {% endfor %}
 </div>

@@ -40,6 +40,7 @@ class NewsEntry(models.Model):
         verbose_name='Разделы сайта',
         related_name='news',
     )
+    order = models.IntegerField("Альтернативный порядок", null=True, blank=True)
 
     @property
     def full_text(self):

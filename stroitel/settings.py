@@ -25,7 +25,7 @@ SECRET_KEY = os.getenv('STROITEL_SECRET', 'xxx')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('STROITEL_DEBUG', '') == '1'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "192.168.1.100"]
 if not DEBUG:
     ALLOWED_HOSTS = ['stroitel.msk.ru']
 

@@ -212,3 +212,7 @@ footer.footer {
 .votingBite {
     background-color: rgb(248, 223, 124);
 }
+.votingResults {
+    padding: 1em;
+    background-color: rgb(185, 246, 161);
+}

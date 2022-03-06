@@ -45,7 +45,7 @@ class NewsEntryView(DetailView):
         if binds:
             return binds[0].site_section
 
-    @property
+    @cached_property
     def extra_context(self):
         ctx = {
             'comments': get_grouped_comments(self.get_object()),
@@ -143,7 +143,7 @@ class SiteSectionView(ListView):
         return NewsEntry.objects.\
             filter(site_sections=self.site_section).\
             annotate(votings_cnt=Count("votings", )). \
-            order_by('-published_at')
+            order_by('order', '-published_at')
 
     @cached_property
     def site_section(self):

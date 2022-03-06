@@ -53,8 +53,8 @@ class NewsEntryForm(forms.ModelForm):
 class NewsEntryAdmin(admin.ModelAdmin):
     form = NewsEntryForm
     ordering = ('-published_at',)
-    list_display = ('title', 'published_at', 'get_site_section', 'get_is_public')
-
+    list_display = ('title', 'published_at', 'order', 'get_site_section', 'get_is_public')
+    list_editable = ('order',)
 
     inlines = [
         SiteSectionInline,

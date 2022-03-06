@@ -19,8 +19,29 @@ def get_voting(entry: NewsEntry, user):
         cnt=Count("votes"),
     ).order_by('-cnt', 'order', '-published_at').all()
 
+    voting_section = voting.entry.site_sections.filter(parent__slug='votings').first()
+    prev_entry, next_entry = None, None
+    if voting_section:
+        q = NewsEntry.objects.filter(section_binds__site_section=voting_section).order_by('order', '-published_at')
+
+        for entry in q:
+            if next_entry == -1:
+                next_entry = entry
+                break
+
+            if entry.pk == voting.entry_id:
+                next_entry = -1
+                continue
+
+            prev_entry = entry
+
+        if next_entry == -1:
+            next_entry = None
+
     return {
         'voting': voting,
+        'prev_entry': prev_entry,
+        'next_entry': next_entry,
         'variants_for_user': variants_for_user,
         'voting_results': voting_results,
     }
@@ -30,7 +51,8 @@ def get_active_votings():
     dt_now = now()
 
     grouped_by_entries_votings = {}
-    v_q = Voting.objects.filter(start_at__lte=dt_now, end_at__gte=dt_now).order_by('order', '-end_at').all()
+    v_q = Voting.objects.filter(start_at__lte=dt_now, end_at__gte=dt_now).\
+        order_by('entry__order', 'order', '-end_at').all()
     voting_order = {}
     for order, voting in enumerate(v_q):
         grouped_by_entries_votings[voting.entry_id] = voting

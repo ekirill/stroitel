@@ -11,7 +11,11 @@
 
                     {% for variant in voting.variants_for_user.all %}
                         <li class="list-group-item variantItem">
-                            <div class="variant"><input type="checkbox" name="vote_for_{{ variant.id }}" {% if variant.user_voted %}checked="checked"{% endif %}>&nbsp;{{ variant.variant }}</div>
+                            <div class="variant">
+                              <label>
+                                <input type="checkbox" name="vote_for_{{ variant.id }}" {% if variant.user_voted %}checked="checked"{% endif %}>&nbsp;{{ variant.variant }}
+                              </label>
+                            </div>
                             {% if variant.user_voted %}
                                 <div class="voteAccepted">Ваш голос принят</div>
                             {% endif %}

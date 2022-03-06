@@ -12,7 +12,7 @@ class Comment(models.Model):
     published_at = models.DateTimeField('Дата публикации', default=now, db_index=True)
     is_visible = models.BooleanField('Виден всем', default=True)
     reply_to = models.ForeignKey('social.Comment', verbose_name='Ответ на', null=True, on_delete=models.SET_NULL)
-    message = models.CharField('Сообщение', max_length=2000)
+    message = models.TextField('Сообщение')
 
     class Meta:
         verbose_name = "Комментарий"

@@ -20,7 +20,7 @@ class SiteSectionInlineFormSet(forms.BaseInlineFormSet):
 
 class SiteSectionInlineForm(forms.ModelForm):
     site_section = forms.ModelChoiceField(
-        queryset=SiteSection.objects.filter(Q(parent__isnull=False) | Q(slug='news')),
+        queryset=SiteSection.objects.filter(Q(parent__isnull=False) | Q(slug='news') | Q(slug='votings')),
         label='Раздел сайта',
     )
 
